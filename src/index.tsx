@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import './firebase';
 
 import { Provider } from 'react-redux';
@@ -17,11 +17,11 @@ if (rootElem) {
 
 	root.render(
 		<React.StrictMode>
-			<Router>
+			<HashRouter>
 				<Provider store={store}>
 					<App />
 				</Provider>
-			</Router>
+			</HashRouter>
 		</React.StrictMode>
 	);
 }
