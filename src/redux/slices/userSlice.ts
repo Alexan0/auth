@@ -1,17 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 interface User {
-	displayName: string
-	email: string;
-	id: number;
-	image: string;
+	displayName: string | null;
+	email: string | null;
+	id: string | null;
+	image: string | null;
 }
 
 const initialState: User = {
 	displayName: '',
 	email: '',
-	id: 0,
+	id: '',
 	image: '',
 };
 
@@ -19,7 +19,7 @@ const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		setUser(state, action) {
+		setUser(state, action: PayloadAction<User>) {
 			state.displayName = action.payload.displayName;
 			state.email = action.payload.email;
 			state.id = action.payload.id;
@@ -28,7 +28,7 @@ const userSlice = createSlice({
 		removeUser(state) {
 			state.displayName = '';
 			state.email = '';
-			state.id = 0;
+			state.id = '';
 			state.image = '';
 		}
 	}

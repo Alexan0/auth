@@ -15,7 +15,7 @@ const UserPage: React.FC = () => {
 		<Form>
 			<FormContent>
 				<UserForm>
-					<UserImage><img src={image} alt={"image"} /></UserImage>
+					<UserImage><img src={image ? image : ''} alt={"image"} /></UserImage>
 					<UserInfo>
 						<Title>{displayName}</Title>
 						<Text>{email}</Text>

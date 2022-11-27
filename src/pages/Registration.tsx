@@ -37,7 +37,22 @@ const Registration: React.FC = () => {
 
 	const registrationUser = async () => {
 		const auth = getAuth();
-		const res = await createUserWithEmailAndPassword(auth, email, pass);
+		const res: any = await createUserWithEmailAndPassword(auth, email, pass)
+			.then((res) => {
+				return res;
+			})
+			.catch((error) => {
+				console.log(error);
+				if (error.message.includes('auth/email-already-in-use')) {
+					alert('Такая почта уже занята')
+				} else if (error.message.includes('auth/weak-password')) {
+					alert('Пароль должен содержать не менее 6 символов')
+				} else if (error.message.includes('auth/invalid-email')) {
+					alert("Неверно указан адрес почты!");
+				}
+				
+			});
+		
 		const storageRef = ref(storage, displayName);
 		const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -51,7 +66,7 @@ const Registration: React.FC = () => {
 					dispatch(setUser({
 						displayName: capitalize(displayName),
 						email,
-						pass,
+						id: res.user.uid,
 						image: res.user.photoURL,
 					}));
 					alert('Аккаунт успешно создан');
@@ -59,11 +74,8 @@ const Registration: React.FC = () => {
 				});
 			},
 			(error) => {
-				if (error.message.includes('auth/email-already-in-use')) {
-					alert('Такая почта уже занята')
-				} else if (error.message.includes('auth/weak-password')) {
-					alert('Пароль должен содержать не менее 6 символов')
-				}
+				console.log(error);
+				alert('что-то пошло не так');
 			}
 		)
 	}
